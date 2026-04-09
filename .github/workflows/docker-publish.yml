@@ -60,7 +60,7 @@ jobs:
         id: tags
         env:
           PYTHON_TAG: ${{ matrix.python_images }}
-          IMAGE: ${{ secrets.DOCKER_SOPEL_IMAGE_NAME }}
+          IMAGE: docker-sopel
           version: jin-release
         run: | 
           if [ "${{ github.event_name }}" == "pull_request" ]; then IMAGE="sopel"; fi
