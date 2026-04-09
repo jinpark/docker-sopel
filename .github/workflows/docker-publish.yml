@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python_images: ["3.8","3.9","3.10","3.11","3.12"]
+        python_images: ["3.12"]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -61,7 +61,7 @@ jobs:
         env:
           PYTHON_TAG: ${{ matrix.python_images }}
           IMAGE: ${{ secrets.DOCKER_SOPEL_IMAGE_NAME }}
-          version: ${{ env.RELEASE_VERSION }}
+          version: jin-release
         run: | 
           if [ "${{ github.event_name }}" == "pull_request" ]; then IMAGE="sopel"; fi
           TAGS="${IMAGE}:${version}-py${PYTHON_TAG},${IMAGE}:${version%.*}-py${PYTHON_TAG},${IMAGE}:${version%.*.*}-py${PYTHON_TAG}"
@@ -94,7 +94,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6,linux/s390x
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           build-args: PYTHON_TAG=${{ matrix.python_images }}-alpine
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.tags.outputs.tags }}
