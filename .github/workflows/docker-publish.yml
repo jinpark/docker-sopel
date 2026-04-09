@@ -9,8 +9,8 @@ on:
   #   - cron: '0 0 * * *' # Nightly build
   # pull_request:
   #   branches: [ master ] 
-  # push:
-  #   branches: [ master ]
+  push:
+    branches: [ master, jin/update-to-build ]
 
   workflow_dispatch: 
 
