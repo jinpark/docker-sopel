@@ -64,9 +64,9 @@ jobs:
           version: jin-release
         run: | 
           if [ "${{ github.event_name }}" == "pull_request" ]; then IMAGE="sopel"; fi
-          TAGS="ghcr.io/jinpark/${IMAGE}:${version}-py${PYTHON_TAG},${IMAGE}:${version%.*}-py${PYTHON_TAG},${IMAGE}:${version%.*.*}-py${PYTHON_TAG}"
+          TAGS="ghcr.io/jinpark/${IMAGE}:${version}-py${PYTHON_TAG},ghcr.io/jinpark/${IMAGE}:${version%.*}-py${PYTHON_TAG},${IMAGE}:${version%.*.*}-py${PYTHON_TAG}"
           if [[ "x${{ matrix.python_images }}" == "x${{ env.default_python }}" ]] && [[ "${{ github.event_name }}" == "push" || "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            TAGS="${TAGS},ghcr.io/jinpark/${IMAGE}:${version},${IMAGE}:${version%.*},${IMAGE}:${version%.*.*},${IMAGE}:latest"
+            TAGS="${TAGS},ghcr.io/jinpark/${IMAGE}:${version},${IMAGE}:${version%.*},ghcr.io/jinpark/${IMAGE}:${version%.*.*},${IMAGE}:latest"
           elif [[ "${{ github.event_name }}" == "schedule" ]]; then
             TAGS="ghcr.io/jinpark/${IMAGE}:nightly"
           fi
@@ -86,7 +86,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v8
           build-args: PYTHON_TAG=${{ matrix.python_images }}-alpine
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.tags.outputs.tags }}
