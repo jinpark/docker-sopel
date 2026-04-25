@@ -84,7 +84,7 @@ if [ "${1}" = "sopel" ]; then
     for package in ${EXTRA_PYPI_PACKAGES}; do install_pip_package "${package}"; done
   fi
 
-  if [ -n "${OTEL_URL} ]; then
+  if [ -n "${OTEL_URL}" ]; then
     opentelemetry-bootstrap -a install
     OTEL_CONFIG="opentelemetry-instrument --service_name sopel --exporter_otlp_endpoint ${OTEL_URL}"
     echo "Hopefully running with otel ${OTEL_CONFIG}"
