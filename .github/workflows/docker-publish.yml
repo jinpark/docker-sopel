@@ -10,7 +10,7 @@ on:
   # pull_request:
   #   branches: [ master ] 
   push:
-    branches: [ master, jin/update-to-build ]
+    branches: [ master, jin/update-to-build, jin/otel ]
 
   workflow_dispatch: 
 
